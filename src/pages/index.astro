@@ -1,7 +1,9 @@
 ---
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Spotlight from '../components/Spotlight.astro';
+import portrait from '../assets/daniel-dekerlegand.jpg';
 import { profile, currently } from '../data/profile';
 import { featuredProjects, ecosystemIntro } from '../data/projects';
 import { experience } from '../data/resume';
@@ -25,17 +27,31 @@ const focus = [
 <Base>
   <section class="hero">
     <div class="wrap">
-      <p class="hero__eyebrow">{profile.location}</p>
-      <h1 class="hero__name">{profile.name}</h1>
-      <p class="hero__title">{profile.title}</p>
-      <p class="hero__tagline">{profile.tagline}</p>
+      <div class="hero__grid">
+        <div class="hero__text">
+          <p class="hero__eyebrow">{profile.location}</p>
+          <h1 class="hero__name">{profile.name}</h1>
+          <p class="hero__title">{profile.title}</p>
+          <p class="hero__tagline">{profile.tagline}</p>
 
-      <p class="hero__summary">{profile.summary}</p>
+          <p class="hero__summary">{profile.summary}</p>
 
-      <div class="hero__actions no-print">
-        <a class="btn btn--primary" href="/projects/">View projects</a>
-        <a class="btn" href="/resume/">Résumé</a>
-        <a class="btn" href={`mailto:${profile.email}`}>Get in touch</a>
+          <div class="hero__actions no-print">
+            <a class="btn btn--primary" href="/projects/">View projects</a>
+            <a class="btn" href="/resume/">Résumé</a>
+            <a class="btn" href={`mailto:${profile.email}`}>Get in touch</a>
+          </div>
+        </div>
+
+        <Image
+          class="hero__portrait"
+          src={portrait}
+          alt={profile.name}
+          width={440}
+          height={440}
+          densities={[1, 2]}
+          loading="eager"
+        />
       </div>
 
       <ul class="hero__now">
@@ -128,6 +144,37 @@ const focus = [
     border-bottom: 1px solid var(--border);
   }
 
+  /* Text keeps its own measure; the portrait fills the space to its right that
+     the measure already leaves empty. Below 56rem the portrait leads. */
+  .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .hero__portrait {
+    width: clamp(9rem, 17vw, 13.75rem);
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    filter: saturate(0.92);
+  }
+
+  @media (max-width: 56rem) {
+    .hero__grid {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+
+    .hero__portrait {
+      grid-row: 1;
+      width: clamp(7rem, 26vw, 9.5rem);
+    }
+  }
+
   .hero__eyebrow {
     font-family: var(--font-mono);
     font-size: 0.72rem;
@@ -201,7 +248,7 @@ const focus = [
 
   .focus {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
     gap: 2.5rem 3rem;
     margin-top: 3rem;
   }
@@ -218,9 +265,10 @@ const focus = [
     color: var(--text-muted);
   }
 
+  /* min() so the track never exceeds the container on narrow viewports. */
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(19rem, 100%), 1fr));
     gap: 1.25rem;
     margin-top: 2.5rem;
   }

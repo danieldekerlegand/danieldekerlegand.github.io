@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import { profile } from '../data/profile';
+import portrait from '../assets/daniel-dekerlegand.jpg';
 
 interface Props {
   title?: string;
@@ -14,7 +15,9 @@ const {
   description = profile.summary,
 } = Astro.props;
 
-const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://danieldekerlegand.github.io');
+const origin = Astro.site ?? new URL('https://danieldekerlegand.github.io');
+const canonical = new URL(Astro.url.pathname, origin);
+const ogImage = new URL(portrait.src, origin);
 ---
 
 <!doctype html>
@@ -32,7 +35,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://danieldeker
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={profile.name} />
     <meta name="twitter:card" content="summary" />
+    <meta name="twitter:image" content={ogImage} />
 
     <script
       is:inline
@@ -42,6 +48,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://danieldeker
         '@type': 'Person',
         name: profile.name,
         jobTitle: profile.title,
+        image: ogImage.href,
         email: `mailto:${profile.email}`,
         url: 'https://danieldekerlegand.github.io',
         sameAs: [profile.links.github, profile.links.linkedin],

@@ -104,9 +104,10 @@ const publicCount = allProjects.filter((p) => p.status === 'public').length;
     max-width: var(--measure);
   }
 
+  /* min() so the track never exceeds the container on narrow viewports. */
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(21rem, 100%), 1fr));
     gap: 1.25rem;
     margin-top: 2.5rem;
   }
