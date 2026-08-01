@@ -3,9 +3,8 @@ import { Image } from 'astro:assets';
 import InsimulArchitecture from './InsimulArchitecture.astro';
 import { spotlight } from '../data/projects';
 import editor from '../assets/insimul-editor.png';
-import grandPre from '../assets/insimul-grand-pre.png';
 
-const sources = { editor, grandPre } as const;
+const sources = { editor } as const;
 const { project, eyebrow, headline, dissertation, degree, paragraphs, figures } = spotlight;
 ---
 
@@ -48,11 +47,11 @@ const { project, eyebrow, headline, dissertation, degree, paragraphs, figures } 
               src={sources[f.src as keyof typeof sources]}
               alt={f.caption}
               widths={[520, 900, 1400]}
-              sizes="(max-width: 52rem) 92vw, 44vw"
+              sizes="(max-width: 52rem) 92vw, 44rem"
               loading="lazy"
             />
             <figcaption class="fig__cap">
-              <span class="fig__credit">{f.credit}</span>
+              <span class="fig__credit">{f.label}</span>
               {f.caption}
             </figcaption>
           </figure>
@@ -158,8 +157,10 @@ const { project, eyebrow, headline, dissertation, degree, paragraphs, figures } 
     margin-top: 2.75rem;
   }
 
+  /* The screenshot is near-square; uncapped it would tower at full width. */
   .fig {
     margin: 0;
+    max-width: 44rem;
   }
 
   /* The screenshots are light-background UI; a surface panel keeps them from

@@ -184,15 +184,9 @@ export const spotlight = {
   figures: [
     {
       src: 'editor',
+      label: 'Insimul Editor',
       caption:
-        'The Insimul web editor with the La Louisiane world loaded, integrating world-level metadata, spatial-layout rendering, and the authoring tab bar.',
-      credit: 'Figure 10.2',
-    },
-    {
-      src: 'grandPre',
-      caption:
-        'A Grand-Pré settlement instance. Spatial layout, building placement, and inhabitant cast are all produced algorithmically from seed parameters declared in the world’s Prolog configuration.',
-      credit: 'Figure 10.3',
+        'The web editor with the La Louisiane world loaded. Spatial layout, building placement, and the inhabitant cast are all produced algorithmically from seed parameters declared in the world’s Prolog configuration.',
     },
   ],
 };
