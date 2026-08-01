@@ -78,15 +78,7 @@ export const groups: ProjectGroup[] = [
           'Fictional worlds turned into games in any genre or engine, with a Prolog core holding the canonical world state.',
         detail:
           'The centerpiece of the doctoral research: a neuro-symbolic narrative AI infrastructure unifying three previously independent social simulation systems — Ensemble, Talk of the Town, and Kismet — behind one declarative Prolog-based format, a web-based collaborative authoring tool, procedural world generation, and a provider-agnostic LLM interface. Its most consequential architectural choice is the separation of authoring data from playthrough data: the editor layer holds world templates, and every runtime side effect lands in the save file, which is the single source of truth for a session.',
-        stack: [
-          'TypeScript',
-          'tau-prolog',
-          'SWI-Prolog',
-          'PostgreSQL',
-          'Drizzle ORM',
-          'MongoDB',
-          'Babylon.js',
-        ],
+        stack: ['Rust', 'Trealla', 'Prolog', 'Babylon.js'],
         status: 'private',
         featured: true,
         spotlight: true,
@@ -178,7 +170,7 @@ export const spotlight = {
     'PhD, Engineering and Applied Science (Computer Science) · University of New Orleans · May 2026',
   paragraphs: [
     'Characters that are socially intelligent and culturally grounded ask for more than any one AI paradigm can give. Symbolic social physics produces interpretable, human-authored norms and relationships, but stilted language. Large language models produce fluent dialogue with no behavioral coherence or cultural grounding. Virtual reality produces embodied presence and contributes no social intelligence at all. The dissertation argues that integrating all three is what it actually takes.',
-    'Insimul is the engine that argument rests on: a neuro-symbolic infrastructure unifying Ensemble, Talk of the Town, and Kismet behind one declarative Prolog format, executed by tau-prolog in the browser with SWI-Prolog as a server fallback. A two-phase architecture separates procedural generation at creation time from simulation at execution time, and an editor layer of world templates is kept strictly apart from the save file, so playthrough state never leaks into shared content.',
+    'Insimul is the engine that argument rests on: a neuro-symbolic infrastructure unifying Ensemble, Talk of the Town, and Kismet behind one declarative Prolog format, discharged by an embedded Prolog runtime that will run in a browser or on a server. A two-phase architecture separates procedural generation at creation time from simulation at execution time, and an authoring layer of world templates is kept strictly apart from playthrough state, so a session never leaks into shared content.',
     'Five implemented systems trace the integration from one end to the other. VESPACE reconstructs 18th-century French theatre culture in VR, its social rules authored by literary historians under a "citation as AI" methodology that grounds each rule in textual evidence. Pet Hotel teaches rule authoring itself through progressive gameplay. Starcrossed first conditions language-model dialogue on symbolic social state, though only in one direction. LLVR closes the loop — a learner\'s speech updates the knowledge base and truth layer, and those updates come straight back as NPC behavior.',
   ],
   figures: [
