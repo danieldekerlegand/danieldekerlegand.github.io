@@ -1,12 +1,15 @@
 ---
 import { profile } from '../data/profile';
 
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+// Links carry the trailing slash Astro's directory output expects, so visitors
+// land on the page directly instead of taking a 301 hop. Compare without it.
+const strip = (p: string) => p.replace(/\/+$/, '') || '/';
+const path = strip(Astro.url.pathname);
 
 const links = [
   { href: '/', label: 'Home' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/resume', label: 'Résumé' },
+  { href: '/projects/', label: 'Projects' },
+  { href: '/resume/', label: 'Résumé' },
 ];
 ---
 
@@ -22,7 +25,7 @@ const links = [
         {
           links.map((l) => (
             <li>
-              <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>
+              <a href={l.href} aria-current={path === strip(l.href) ? 'page' : undefined}>
                 {l.label}
               </a>
             </li>
