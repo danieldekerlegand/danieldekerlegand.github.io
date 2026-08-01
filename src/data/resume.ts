@@ -57,7 +57,7 @@ export const education: School[] = [
     org: 'University of New Orleans',
     location: 'New Orleans, LA',
     degrees: [
-      { degree: 'Doctor of Philosophy, Computer Science', year: 'Expected May 2026' },
+      { degree: 'Doctor of Philosophy, Computer Science', year: '2026' },
       { degree: 'Master of Science, Computer Science', year: '2018' },
       {
         degree:

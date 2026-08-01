@@ -48,7 +48,8 @@ export const groups: ProjectGroup[] = [
         detail:
           'Where the specifications become running services. Includes shared schemas and clients consumed across the ecosystem, plus in-progress ports of the data-translation engine to Rust and the provider-router to Erlang for the concurrency profile that workload wants.',
         stack: ['Python', 'TypeScript', 'Rust', 'Erlang'],
-        status: 'private',
+        repo: 'https://github.com/danieldekerlegand/agora',
+        status: 'public',
         featured: true,
       },
       {
@@ -173,10 +174,8 @@ export const spotlight = {
   eyebrow: 'Doctoral research',
   headline: 'No single AI paradigm makes a believable social world',
   dissertation: 'Insimul: A Hybrid AI System for Social Immersion',
-  // Matches the wording in resume.ts education; see note to Daniel about whether
-  // the degree is now conferred rather than expected.
   degree:
-    'PhD, Engineering and Applied Science (Computer Science) · University of New Orleans · expected May 2026',
+    'PhD, Engineering and Applied Science (Computer Science) · University of New Orleans · May 2026',
   paragraphs: [
     'Characters that are socially intelligent and culturally grounded ask for more than any one AI paradigm can give. Symbolic social physics produces interpretable, human-authored norms and relationships, but stilted language. Large language models produce fluent dialogue with no behavioral coherence or cultural grounding. Virtual reality produces embodied presence and contributes no social intelligence at all. The dissertation argues that integrating all three is what it actually takes.',
     'Insimul is the engine that argument rests on: a neuro-symbolic infrastructure unifying Ensemble, Talk of the Town, and Kismet behind one declarative Prolog format, executed by tau-prolog in the browser with SWI-Prolog as a server fallback. A two-phase architecture separates procedural generation at creation time from simulation at execution time, and an editor layer of world templates is kept strictly apart from the save file, so playthrough state never leaks into shared content.',

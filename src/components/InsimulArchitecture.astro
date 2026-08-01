@@ -1,0 +1,211 @@
+---
+// Redrawn from Figure 10.1 of the dissertation. The original is a LaTeX figure
+// that overflows its text block (the save-file box is clipped at the right
+// margin) and is black-on-white, which would glare in dark mode. This version
+// carries the same components and data flows using the site's design tokens, so
+// it themes with the page and stays crisp at any size.
+---
+
+<figure class="arch">
+  <svg
+    class="arch__svg"
+    viewBox="0 0 900 470"
+    role="img"
+    aria-labelledby="arch-title arch-desc"
+    preserveAspectRatio="xMidYMid meet"
+  >
+    <title id="arch-title">Insimul runtime architecture</title>
+    <desc id="arch-desc">
+      The editor layer supplies world templates as rules and facts to the unified simulation
+      engine. The engine evaluates them through the Prolog runtime, writes per-playthrough state
+      to the save-file layer, and exchanges narratives, events, and intents with clients over a
+      REST, WebSocket, SSE, and gRPC surface. A pluggable LLM provider and speech pipeline attach
+      as side components used during conversation.
+    </desc>
+
+    <defs>
+      <marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" class="arch__head" />
+      </marker>
+    </defs>
+
+    <!-- client surface -->
+    <rect x="350" y="8" width="200" height="76" rx="4" class="arch__box" />
+    <text class="arch__t" text-anchor="middle">
+      <tspan x="450" y="32">REST / WebSocket</tspan>
+      <tspan x="450" y="49">SSE / gRPC surface</tspan>
+    </text>
+    <text class="arch__mono" x="450" y="68" text-anchor="middle">routes.ts</text>
+
+    <!-- editor layer -->
+    <rect x="15" y="148" width="200" height="108" rx="4" class="arch__box" />
+    <text class="arch__t" x="115" y="176" text-anchor="middle">Editor Layer</text>
+    <text class="arch__mono" x="115" y="194" text-anchor="middle">MongoDB</text>
+    <text class="arch__s" text-anchor="middle">
+      <tspan x="115" y="216">worlds · characters · quests</tspan>
+      <tspan x="115" y="232">truths · rules · actions</tspan>
+      <tspan x="115" y="248">grammars</tspan>
+    </text>
+
+    <!-- engine -->
+    <rect x="325" y="170" width="250" height="64" rx="4" class="arch__box arch__box--key" />
+    <text class="arch__t arch__t--key" x="450" y="196" text-anchor="middle">Unified Simulation Engine</text>
+    <text class="arch__mono arch__mono--key" x="450" y="217" text-anchor="middle">unified-engine.ts</text>
+
+    <!-- save file -->
+    <rect x="685" y="148" width="200" height="108" rx="4" class="arch__box" />
+    <text class="arch__t" x="785" y="184" text-anchor="middle">Save-File Layer</text>
+    <text class="arch__s" text-anchor="middle">
+      <tspan x="785" y="208">per-playthrough state</tspan>
+      <tspan x="785" y="224">single source of truth</tspan>
+    </text>
+    <text class="arch__mono" x="785" y="246" text-anchor="middle">save-file.ts</text>
+
+    <!-- prolog runtime -->
+    <rect x="325" y="286" width="250" height="72" rx="4" class="arch__box" />
+    <text class="arch__t" x="450" y="312" text-anchor="middle">Prolog Runtime</text>
+    <text class="arch__s" text-anchor="middle">
+      <tspan x="450" y="332">tau-prolog (primary)</tspan>
+      <tspan x="450" y="348">SWI-Prolog (server fallback)</tspan>
+    </text>
+
+    <!-- side components -->
+    <rect x="70" y="398" width="200" height="62" rx="4" class="arch__box arch__box--soft" />
+    <text class="arch__t" x="170" y="424" text-anchor="middle">LLM Provider</text>
+    <text class="arch__s" x="170" y="444" text-anchor="middle">pluggable · Gemini default</text>
+
+    <rect x="630" y="398" width="200" height="62" rx="4" class="arch__box arch__box--soft" />
+    <text class="arch__t" x="730" y="424" text-anchor="middle">Speech Pipeline</text>
+    <text class="arch__s" x="730" y="444" text-anchor="middle">STT / TTS / voice WS</text>
+
+    <!-- flows -->
+    <!-- Labels stack on two lines: the 110px gap between boxes is narrower than
+         either phrase set on one line. -->
+    <path d="M215,202 H318" class="arch__line" marker-end="url(#arw)" />
+    <text class="arch__lbl" text-anchor="middle">
+      <tspan x="266" y="178">templates:</tspan>
+      <tspan x="266" y="191">rules, facts</tspan>
+    </text>
+
+    <path d="M575,202 H678" class="arch__line" marker-end="url(#arw)" />
+    <text class="arch__lbl" text-anchor="middle">
+      <tspan x="626" y="178">per-playthrough</tspan>
+      <tspan x="626" y="191">writes</tspan>
+    </text>
+
+    <path d="M408,170 V91" class="arch__line" marker-end="url(#arw)" />
+    <text class="arch__lbl" x="400" y="140" text-anchor="end">narratives, events</text>
+
+    <path d="M500,91 V163" class="arch__line" marker-end="url(#arw)" />
+    <text class="arch__lbl" x="510" y="140" text-anchor="start">intents</text>
+
+    <path d="M450,234 V279" class="arch__line" marker-start="url(#arw)" marker-end="url(#arw)" />
+
+    <path d="M325,330 C255,330 240,360 195,395" class="arch__line" marker-end="url(#arw)" />
+    <path d="M575,330 C645,330 660,360 705,395" class="arch__line" marker-end="url(#arw)" />
+  </svg>
+
+  <figcaption class="arch__cap">
+    <span class="arch__credit">Figure 10.1</span>
+    Insimul runtime architecture, redrawn from the dissertation. The editor layer holds world
+    templates; the save-file layer holds per-playthrough state; the engine consumes rules and facts
+    from the editor, evaluates them through the Prolog runtime, and writes session mutations only
+    to the save file.
+  </figcaption>
+</figure>
+
+<style>
+  .arch {
+    margin: 2.75rem 0 0;
+  }
+
+  .arch__svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1rem;
+  }
+
+  .arch__box {
+    fill: var(--bg-alt);
+    stroke: var(--border-strong);
+    stroke-width: 1.25;
+  }
+
+  .arch__box--key {
+    fill: var(--accent-soft);
+    stroke: var(--accent);
+    stroke-width: 1.75;
+  }
+
+  .arch__box--soft {
+    fill: none;
+    stroke-dasharray: 4 3;
+  }
+
+  .arch__t {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    fill: var(--text);
+  }
+
+  .arch__t--key {
+    fill: var(--accent);
+  }
+
+  .arch__s {
+    font-family: var(--font-body);
+    font-size: 11.5px;
+    fill: var(--text-muted);
+  }
+
+  .arch__mono,
+  .arch__lbl {
+    font-family: var(--font-mono);
+    fill: var(--text-faint);
+  }
+
+  .arch__mono {
+    font-size: 11px;
+  }
+
+  .arch__mono--key {
+    fill: var(--accent);
+    opacity: 0.85;
+  }
+
+  .arch__lbl {
+    font-size: 10.5px;
+  }
+
+  .arch__line {
+    fill: none;
+    stroke: var(--text-faint);
+    stroke-width: 1.4;
+  }
+
+  .arch__head {
+    fill: var(--text-faint);
+  }
+
+  .arch__cap {
+    margin-top: 0.65rem;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--text-faint);
+    max-width: var(--measure);
+  }
+
+  .arch__credit {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-right: 0.5rem;
+  }
+</style>
