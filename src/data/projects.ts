@@ -79,7 +79,10 @@ export const groups: ProjectGroup[] = [
         detail:
           'The centerpiece of the doctoral research: a neuro-symbolic narrative AI infrastructure unifying three previously independent social simulation systems — Ensemble, Talk of the Town, and Kismet — behind one declarative Prolog-based format, a web-based collaborative authoring tool, procedural world generation, and a provider-agnostic LLM interface. Its most consequential architectural choice is the separation of authoring data from playthrough data: the editor layer holds world templates, and every runtime side effect lands in the save file, which is the single source of truth for a session.',
         stack: ['Rust', 'Trealla', 'Prolog', 'Babylon.js'],
-        status: 'private',
+        repo: 'https://github.com/insimul',
+        // Partly open: native core and engine plugins are public, the authoring
+        // platform and server are not. See spotlight.openSource for the detail.
+        status: 'public',
         featured: true,
         spotlight: true,
       },
@@ -173,6 +176,38 @@ export const spotlight = {
     'Insimul is the engine that argument rests on: a neuro-symbolic infrastructure unifying Ensemble, Talk of the Town, and Kismet behind one declarative Prolog format, discharged by an embedded Prolog runtime that will run in a browser or on a server. A two-phase architecture separates procedural generation at creation time from simulation at execution time, and an authoring layer of world templates is kept strictly apart from playthrough state, so a session never leaks into shared content.',
     'Five implemented systems trace the integration from one end to the other. VESPACE reconstructs 18th-century French theatre culture in VR, its social rules authored by literary historians under a "citation as AI" methodology that grounds each rule in textual evidence. Pet Hotel teaches rule authoring itself through progressive gameplay. Starcrossed first conditions language-model dialogue on symbolic social state, though only in one direction. LLVR closes the loop — a learner\'s speech updates the knowledge base and truth layer, and those updates come straight back as NPC behavior.',
   ],
+  // The runtime core and the engine bindings are open; the authoring platform
+  // and server are not. Verified public — do not add a row before its repo is.
+  openSource: {
+    repos: [
+      {
+        name: 'native',
+        url: 'https://github.com/insimul/native',
+        lang: 'Rust',
+        note: 'Trealla-backed C-ABI Prolog core',
+      },
+      { name: 'unity', url: 'https://github.com/insimul/unity', lang: 'C#', note: 'engine plugin' },
+      {
+        name: 'unreal',
+        url: 'https://github.com/insimul/unreal',
+        lang: 'C++',
+        note: 'engine plugin',
+      },
+      {
+        name: 'godot',
+        url: 'https://github.com/insimul/godot',
+        lang: 'GDScript',
+        note: 'engine plugin',
+      },
+      {
+        name: 'babylon',
+        url: 'https://github.com/insimul/babylon',
+        lang: 'TypeScript',
+        note: 'engine plugin',
+      },
+    ],
+    closed: 'The authoring platform and server remain private.',
+  },
   figures: [
     {
       src: 'editor',

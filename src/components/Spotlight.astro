@@ -5,7 +5,8 @@ import { spotlight } from '../data/projects';
 import editor from '../assets/insimul-editor.png';
 
 const sources = { editor } as const;
-const { project, eyebrow, headline, dissertation, degree, paragraphs, figures } = spotlight;
+const { project, eyebrow, headline, dissertation, degree, paragraphs, openSource, figures } =
+  spotlight;
 ---
 
 <section class="spot">
@@ -32,6 +33,24 @@ const { project, eyebrow, headline, dissertation, degree, paragraphs, figures } 
           <ul class="tag-row">
             {project.stack.map((s) => <li class="tag">{s}</li>)}
           </ul>
+        </div>
+
+        <div class="oss">
+          <p class="spot__stack-label">Open source</p>
+          <ul class="oss__list">
+            {
+              openSource.repos.map((r) => (
+                <li class="oss__item">
+                  <a class="oss__name" href={r.url} rel="noopener">
+                    {r.name}
+                  </a>
+                  <span class="oss__lang">{r.lang}</span>
+                  <span class="oss__note">{r.note}</span>
+                </li>
+              ))
+            }
+          </ul>
+          <p class="oss__closed">{openSource.closed}</p>
         </div>
 
         <div class="figs">
@@ -146,6 +165,55 @@ const { project, eyebrow, headline, dissertation, degree, paragraphs, figures } 
     text-transform: uppercase;
     color: var(--text-faint);
     margin-bottom: 0.6rem;
+  }
+
+  /* --- open-source repos --- */
+
+  .oss {
+    margin-top: 2rem;
+  }
+
+  .oss__list {
+    list-style: none;
+  }
+
+  .oss__item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 0.75rem;
+    align-items: baseline;
+    padding-block: 0.35rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .oss__name {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-decoration: none;
+  }
+
+  .oss__name:hover {
+    text-decoration: underline;
+  }
+
+  .oss__lang {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-faint);
+    justify-self: end;
+  }
+
+  /* Spans both columns so the note wraps under the name, not beside it. */
+  .oss__note {
+    grid-column: 1 / -1;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .oss__closed {
+    margin-top: 0.75rem;
+    font-size: 0.75rem;
+    color: var(--text-faint);
   }
 
   /* --- figures from the dissertation --- */
