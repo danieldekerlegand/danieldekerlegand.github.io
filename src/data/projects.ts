@@ -94,7 +94,8 @@ export const groups: ProjectGroup[] = [
         detail:
           'Reconciles heterogeneous sources against one canonical graph so that every downstream consumer resolves an entity the same way. Generic format translation is being factored out into agora, leaving pinakes to do the part that is genuinely its own: deciding what is true and which records refer to the same thing.',
         stack: ['TypeScript', 'React', 'Python', 'Wikidata', 'SPARQL'],
-        status: 'private',
+        repo: 'https://github.com/danieldekerlegand/pinakes',
+        status: 'public',
       },
       {
         name: 'cuneiform',
