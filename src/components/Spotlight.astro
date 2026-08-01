@@ -1,7 +1,11 @@
 ---
+import { Image } from 'astro:assets';
 import { spotlight } from '../data/projects';
+import editor from '../assets/insimul-editor.png';
+import grandPre from '../assets/insimul-grand-pre.png';
 
-const { project, eyebrow, headline, degree, paragraphs, stats } = spotlight;
+const sources = { editor, grandPre } as const;
+const { project, eyebrow, headline, dissertation, degree, paragraphs, figures } = spotlight;
 ---
 
 <section class="spot">
@@ -14,6 +18,7 @@ const { project, eyebrow, headline, degree, paragraphs, stats } = spotlight;
     </div>
 
     <p class="spot__headline">{headline}</p>
+    <p class="spot__diss"><cite>{dissertation}</cite></p>
     <p class="spot__degree">{degree}</p>
 
     <div class="spot__body">
@@ -22,18 +27,6 @@ const { project, eyebrow, headline, degree, paragraphs, stats } = spotlight;
       </div>
 
       <aside class="spot__side">
-        {/* A handful of headline numbers: stat tiles, not a chart. */}
-        <dl class="stats">
-          {
-            stats.map((s) => (
-              <div class="stat">
-                <dd class="stat__value">{s.value}</dd>
-                <dt class="stat__label">{s.label}</dt>
-              </div>
-            ))
-          }
-        </dl>
-
         <div class="spot__stack">
           <p class="spot__stack-label">Built with</p>
           <ul class="tag-row">
@@ -41,6 +34,27 @@ const { project, eyebrow, headline, degree, paragraphs, stats } = spotlight;
           </ul>
         </div>
       </aside>
+    </div>
+
+    <div class="figs">
+      {
+        figures.map((f) => (
+          <figure class="fig">
+            <Image
+              class="fig__img"
+              src={sources[f.src as keyof typeof sources]}
+              alt={f.caption}
+              widths={[520, 900, 1400]}
+              sizes="(max-width: 52rem) 92vw, 44vw"
+              loading="lazy"
+            />
+            <figcaption class="fig__cap">
+              <span class="fig__credit">{f.credit}</span>
+              {f.caption}
+            </figcaption>
+          </figure>
+        ))
+      }
     </div>
   </div>
 </section>
@@ -85,15 +99,26 @@ const { project, eyebrow, headline, degree, paragraphs, stats } = spotlight;
     text-wrap: balance;
   }
 
+  .spot__diss {
+    margin-top: 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  .spot__diss cite {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--text-muted);
+  }
+
   .spot__degree {
     font-size: 0.82rem;
     color: var(--text-faint);
-    margin-top: 0.75rem;
+    margin-top: 0.2rem;
   }
 
   .spot__body {
     display: grid;
-    grid-template-columns: minmax(0, 1.65fr) minmax(15rem, 1fr);
+    grid-template-columns: minmax(0, 1.65fr) minmax(min(15rem, 100%), 1fr);
     gap: 2.5rem 3.5rem;
     margin-top: 2.5rem;
     padding-top: 2.25rem;
@@ -112,43 +137,6 @@ const { project, eyebrow, headline, degree, paragraphs, stats } = spotlight;
     color: var(--text-muted);
   }
 
-  /* --- stat tiles: sans values, proportional figures, label below --- */
-
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.5rem 1.25rem;
-    margin: 0;
-  }
-
-  .stat {
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-    padding-top: 0.7rem;
-    border-top: 2px solid var(--accent);
-  }
-
-  .stat__value {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: 1.65rem;
-    font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    color: var(--text);
-  }
-
-  .stat__label {
-    font-size: 0.78rem;
-    line-height: 1.35;
-    color: var(--text-muted);
-  }
-
-  .spot__stack {
-    margin-top: 2.25rem;
-  }
-
   .spot__stack-label {
     font-family: var(--font-mono);
     font-size: 0.68rem;
@@ -156,6 +144,46 @@ const { project, eyebrow, headline, degree, paragraphs, stats } = spotlight;
     text-transform: uppercase;
     color: var(--text-faint);
     margin-bottom: 0.6rem;
+  }
+
+  /* --- figures from the dissertation --- */
+
+  .figs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+    gap: 1.75rem;
+    margin-top: 2.75rem;
+  }
+
+  .fig {
+    margin: 0;
+  }
+
+  /* The screenshots are light-background UI; a surface panel keeps them from
+     glaring against the dark theme. */
+  .fig__img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: #fff;
+  }
+
+  .fig__cap {
+    margin-top: 0.65rem;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--text-faint);
+  }
+
+  .fig__credit {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-right: 0.5rem;
   }
 
   @media (max-width: 52rem) {

@@ -76,8 +76,16 @@ export const groups: ProjectGroup[] = [
         blurb:
           'Fictional worlds turned into games in any genre or engine, with a Prolog core holding the canonical world state.',
         detail:
-          'The centerpiece of the doctoral research. Symbolic social state and statistical language generation exchange information bidirectionally: first-order predicate logic constrains what a transformer may assert, and generated narrative is compiled back into rules. A meta-workspace of bare-named submodules spans the browser runtime, platform, server, and native engine bindings for Babylon, Godot, Unity, and Unreal.',
-        stack: ['TypeScript', 'Babylon.js', 'Prolog', 'C', 'MongoDB'],
+          'The centerpiece of the doctoral research: a neuro-symbolic narrative AI infrastructure unifying three previously independent social simulation systems — Ensemble, Talk of the Town, and Kismet — behind one declarative Prolog-based format, a web-based collaborative authoring tool, procedural world generation, and a provider-agnostic LLM interface. Its most consequential architectural choice is the separation of authoring data from playthrough data: the editor layer holds world templates, and every runtime side effect lands in the save file, which is the single source of truth for a session.',
+        stack: [
+          'TypeScript',
+          'tau-prolog',
+          'SWI-Prolog',
+          'PostgreSQL',
+          'Drizzle ORM',
+          'MongoDB',
+          'Babylon.js',
+        ],
         status: 'private',
         featured: true,
         spotlight: true,
@@ -163,18 +171,30 @@ export const allProjects = groups.flatMap((g) => g.projects);
 export const spotlight = {
   project: allProjects.find((p) => p.spotlight)!,
   eyebrow: 'Doctoral research',
-  headline: 'A world model a language model is not allowed to contradict',
-  degree: 'PhD, Computer Science · University of New Orleans · expected May 2026',
+  headline: 'No single AI paradigm makes a believable social world',
+  dissertation: 'Insimul: A Hybrid AI System for Social Immersion',
+  // Matches the wording in resume.ts education; see note to Daniel about whether
+  // the degree is now conferred rather than expected.
+  degree:
+    'PhD, Engineering and Applied Science (Computer Science) · University of New Orleans · expected May 2026',
   paragraphs: [
-    'Insimul turns fictional worlds into games in any genre or engine, with a Prolog core holding the canonical world state. The research question underneath it is what a language model should and should not be trusted with: generation is fluent but unaccountable, and symbolic logic is accountable but inert. Insimul makes each one answer to the other.',
-    'Information flows in both directions. First-order predicate logic constrains what the transformer may assert about the world, so it cannot invent a dead character back into a scene or contradict an established relationship. What the model does generate is put through rule extraction and compilation, so narrative becomes new facts the symbolic engine can reason over. Knowledge graphs with neural embeddings (FAISS) and prompt programs written in DSPy sit between the two.',
-    'The evaluation is empirical rather than anecdotal: five implemented systems across education, entertainment, and worldbuilding, three controlled user studies analyzed with mixed-effects models in R, and multi-generational demographic simulation carrying 40–200+ procedurally-generated characters without the world drifting out from under them.',
+    'Characters that are socially intelligent and culturally grounded ask for more than any one AI paradigm can give. Symbolic social physics produces interpretable, human-authored norms and relationships, but stilted language. Large language models produce fluent dialogue with no behavioral coherence or cultural grounding. Virtual reality produces embodied presence and contributes no social intelligence at all. The dissertation argues that integrating all three is what it actually takes.',
+    'Insimul is the engine that argument rests on: a neuro-symbolic infrastructure unifying Ensemble, Talk of the Town, and Kismet behind one declarative Prolog format, executed by tau-prolog in the browser with SWI-Prolog as a server fallback. A two-phase architecture separates procedural generation at creation time from simulation at execution time, and an editor layer of world templates is kept strictly apart from the save file, so playthrough state never leaks into shared content.',
+    'Five implemented systems trace the integration from one end to the other. VESPACE reconstructs 18th-century French theatre culture in VR, its social rules authored by literary historians under a "citation as AI" methodology that grounds each rule in textual evidence. Pet Hotel teaches rule authoring itself through progressive gameplay. Starcrossed first conditions language-model dialogue on symbolic social state, though only in one direction. LLVR closes the loop — a learner\'s speech updates the knowledge base and truth layer, and those updates come straight back as NPC behavior.',
   ],
-  stats: [
-    { value: '5', label: 'Implemented systems' },
-    { value: '69', label: 'Study participants' },
-    { value: '358+', label: 'Citations to the research' },
-    { value: '95%+', label: 'Simulation consistency' },
+  figures: [
+    {
+      src: 'editor',
+      caption:
+        'The Insimul web editor with the La Louisiane world loaded, integrating world-level metadata, spatial-layout rendering, and the authoring tab bar.',
+      credit: 'Figure 10.2',
+    },
+    {
+      src: 'grandPre',
+      caption:
+        'A Grand-Pré settlement instance. Spatial layout, building placement, and inhabitant cast are all produced algorithmically from seed parameters declared in the world’s Prolog configuration.',
+      credit: 'Figure 10.3',
+    },
   ],
 };
 
