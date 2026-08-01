@@ -33,31 +33,31 @@ const { project, eyebrow, headline, dissertation, degree, paragraphs, figures } 
             {project.stack.map((s) => <li class="tag">{s}</li>)}
           </ul>
         </div>
+
+        <div class="figs">
+          {
+            figures.map((f) => (
+              <figure class="fig">
+                <Image
+                  class="fig__img"
+                  src={sources[f.src as keyof typeof sources]}
+                  alt={f.caption}
+                  widths={[420, 840]}
+                  sizes="(max-width: 52rem) 92vw, 24rem"
+                  loading="lazy"
+                />
+                <figcaption class="fig__cap">
+                  <span class="fig__credit">{f.label}</span>
+                  {f.caption}
+                </figcaption>
+              </figure>
+            ))
+          }
+        </div>
       </aside>
     </div>
 
     <InsimulArchitecture />
-
-    <div class="figs">
-      {
-        figures.map((f) => (
-          <figure class="fig">
-            <Image
-              class="fig__img"
-              src={sources[f.src as keyof typeof sources]}
-              alt={f.caption}
-              widths={[520, 900, 1400]}
-              sizes="(max-width: 52rem) 92vw, 44rem"
-              loading="lazy"
-            />
-            <figcaption class="fig__cap">
-              <span class="fig__credit">{f.label}</span>
-              {f.caption}
-            </figcaption>
-          </figure>
-        ))
-      }
-    </div>
   </div>
 </section>
 
@@ -150,17 +150,16 @@ const { project, eyebrow, headline, dissertation, degree, paragraphs, figures } 
 
   /* --- figures from the dissertation --- */
 
+  /* Sits in the side column under the stack, so the column already bounds it. */
   .figs {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 1.75rem;
-    margin-top: 2.75rem;
+    margin-top: 2rem;
   }
 
-  /* The screenshot is near-square; uncapped it would tower at full width. */
   .fig {
     margin: 0;
-    max-width: 44rem;
   }
 
   /* The screenshots are light-background UI; a surface panel keeps them from
