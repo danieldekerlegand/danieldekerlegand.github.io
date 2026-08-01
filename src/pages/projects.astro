@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import Spotlight from '../components/Spotlight.astro';
 import { groups, ecosystemIntro, allProjects } from '../data/projects';
 
 const publicCount = allProjects.filter((p) => p.status === 'public').length;
@@ -27,6 +28,8 @@ const publicCount = allProjects.filter((p) => p.status === 'public').length;
     </div>
   </section>
 
+  <Spotlight />
+
   {
     groups.map((group) => (
       <section class="section" id={group.id}>
@@ -35,9 +38,11 @@ const publicCount = allProjects.filter((p) => p.status === 'public').length;
           <p class="lede">{group.intro}</p>
 
           <div class="grid">
-            {group.projects.map((p) => (
-              <ProjectCard project={p} expanded />
-            ))}
+            {group.projects
+              .filter((p) => !p.spotlight)
+              .map((p) => (
+                <ProjectCard project={p} expanded />
+              ))}
           </div>
         </div>
       </section>

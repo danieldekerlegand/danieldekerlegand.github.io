@@ -7,6 +7,8 @@ export type Project = {
   repo?: string;
   status?: 'public' | 'private';
   featured?: boolean;
+  /** Gets its own full-width treatment; excluded from the card grids. */
+  spotlight?: boolean;
 };
 
 export type ProjectGroup = {
@@ -66,7 +68,7 @@ export const groups: ProjectGroup[] = [
     id: 'products',
     title: 'Products',
     intro:
-      'Each one a producer of, or consumer from, the shared fabric — worlds, knowledge, organizations, media, and audio.',
+      'Each one a producer of, or consumer from, the shared fabric. Insimul — the worldbuilding product and the doctoral work — is covered in full above; these are the rest.',
     projects: [
       {
         name: 'insimul',
@@ -78,6 +80,7 @@ export const groups: ProjectGroup[] = [
         stack: ['TypeScript', 'Babylon.js', 'Prolog', 'C', 'MongoDB'],
         status: 'private',
         featured: true,
+        spotlight: true,
       },
       {
         name: 'pinakes',
@@ -154,4 +157,26 @@ export const groups: ProjectGroup[] = [
 ];
 
 export const allProjects = groups.flatMap((g) => g.projects);
-export const featuredProjects = allProjects.filter((p) => p.featured);
+
+/** The doctoral project. Rendered full-width by Spotlight.astro, so the card
+ *  grids exclude it rather than showing it twice. */
+export const spotlight = {
+  project: allProjects.find((p) => p.spotlight)!,
+  eyebrow: 'Doctoral research',
+  headline: 'A world model a language model is not allowed to contradict',
+  degree: 'PhD, Computer Science · University of New Orleans · expected May 2026',
+  paragraphs: [
+    'Insimul turns fictional worlds into games in any genre or engine, with a Prolog core holding the canonical world state. The research question underneath it is what a language model should and should not be trusted with: generation is fluent but unaccountable, and symbolic logic is accountable but inert. Insimul makes each one answer to the other.',
+    'Information flows in both directions. First-order predicate logic constrains what the transformer may assert about the world, so it cannot invent a dead character back into a scene or contradict an established relationship. What the model does generate is put through rule extraction and compilation, so narrative becomes new facts the symbolic engine can reason over. Knowledge graphs with neural embeddings (FAISS) and prompt programs written in DSPy sit between the two.',
+    'The evaluation is empirical rather than anecdotal: five implemented systems across education, entertainment, and worldbuilding, three controlled user studies analyzed with mixed-effects models in R, and multi-generational demographic simulation carrying 40–200+ procedurally-generated characters without the world drifting out from under them.',
+  ],
+  stats: [
+    { value: '5', label: 'Implemented systems' },
+    { value: '69', label: 'Study participants' },
+    { value: '358+', label: 'Citations to the research' },
+    { value: '95%+', label: 'Simulation consistency' },
+  ],
+};
+
+/** Featured cards exclude the spotlight — it is rendered above them in full. */
+export const featuredProjects = allProjects.filter((p) => p.featured && !p.spotlight);

@@ -1,0 +1,167 @@
+---
+import { spotlight } from '../data/projects';
+
+const { project, eyebrow, headline, degree, paragraphs, stats } = spotlight;
+---
+
+<section class="spot">
+  <div class="wrap">
+    <p class="eyebrow">{eyebrow}</p>
+
+    <div class="spot__top">
+      <h2 class="spot__name">{project.name}</h2>
+      <span class="spot__kind">{project.kind}</span>
+    </div>
+
+    <p class="spot__headline">{headline}</p>
+    <p class="spot__degree">{degree}</p>
+
+    <div class="spot__body">
+      <div class="spot__prose">
+        {paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+
+      <aside class="spot__side">
+        {/* A handful of headline numbers: stat tiles, not a chart. */}
+        <dl class="stats">
+          {
+            stats.map((s) => (
+              <div class="stat">
+                <dd class="stat__value">{s.value}</dd>
+                <dt class="stat__label">{s.label}</dt>
+              </div>
+            ))
+          }
+        </dl>
+
+        <div class="spot__stack">
+          <p class="spot__stack-label">Built with</p>
+          <ul class="tag-row">
+            {project.stack.map((s) => <li class="tag">{s}</li>)}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<style>
+  .spot {
+    padding-block: clamp(3.5rem, 8vw, 5.5rem);
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .spot__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 1rem;
+  }
+
+  .spot__name {
+    font-family: var(--font-mono);
+    font-size: clamp(1.9rem, 5vw, 2.9rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: var(--accent);
+  }
+
+  .spot__kind {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .spot__headline {
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 3.2vw, 1.9rem);
+    line-height: 1.25;
+    letter-spacing: -0.012em;
+    margin-top: 0.85rem;
+    max-width: 34ch;
+    text-wrap: balance;
+  }
+
+  .spot__degree {
+    font-size: 0.82rem;
+    color: var(--text-faint);
+    margin-top: 0.75rem;
+  }
+
+  .spot__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.65fr) minmax(15rem, 1fr);
+    gap: 2.5rem 3.5rem;
+    margin-top: 2.5rem;
+    padding-top: 2.25rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .spot__prose {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    max-width: var(--measure);
+  }
+
+  .spot__prose p {
+    font-size: 1rem;
+    color: var(--text-muted);
+  }
+
+  /* --- stat tiles: sans values, proportional figures, label below --- */
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 1.25rem;
+    margin: 0;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding-top: 0.7rem;
+    border-top: 2px solid var(--accent);
+  }
+
+  .stat__value {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 1.65rem;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  .stat__label {
+    font-size: 0.78rem;
+    line-height: 1.35;
+    color: var(--text-muted);
+  }
+
+  .spot__stack {
+    margin-top: 2.25rem;
+  }
+
+  .spot__stack-label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 0.6rem;
+  }
+
+  @media (max-width: 52rem) {
+    .spot__body {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>
