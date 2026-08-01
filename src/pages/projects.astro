@@ -1,0 +1,112 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { groups, ecosystemIntro, allProjects } from '../data/projects';
+
+const publicCount = allProjects.filter((p) => p.status === 'public').length;
+---
+
+<Base
+  title="Projects — Daniel DeKerlegand"
+  description="A neuro-symbolic AI ecosystem: shared protocol contracts, a runtime commons, an inference-memory mesh, and the worldbuilding, knowledge, agent, media, and audio products built on them."
+>
+  <section class="head">
+    <div class="wrap">
+      <p class="eyebrow">Projects</p>
+      <h1 class="head__title">A neuro-symbolic ecosystem</h1>
+      <p class="head__intro">{ecosystemIntro}</p>
+
+      <nav class="jump" aria-label="Sections">
+        {groups.map((g) => <a href={`#${g.id}`}>{g.title}</a>)}
+      </nav>
+
+      <p class="note">
+        {publicCount} of {allProjects.length} repositories are public today — those carry a source link.
+        The rest are described here in full but not yet open; several are on the path to release.
+      </p>
+    </div>
+  </section>
+
+  {
+    groups.map((group) => (
+      <section class="section" id={group.id}>
+        <div class="wrap">
+          <h2 class="section-title">{group.title}</h2>
+          <p class="lede">{group.intro}</p>
+
+          <div class="grid">
+            {group.projects.map((p) => (
+              <ProjectCard project={p} expanded />
+            ))}
+          </div>
+        </div>
+      </section>
+    ))
+  }
+</Base>
+
+<style>
+  .head {
+    padding-block: clamp(3rem, 8vw, 5rem) clamp(2.5rem, 5vw, 3.5rem);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .head__title {
+    font-size: clamp(2.1rem, 6vw, 3.25rem);
+    letter-spacing: -0.022em;
+    margin-bottom: 1.25rem;
+  }
+
+  .head__intro {
+    max-width: var(--measure);
+    color: var(--text-muted);
+    font-size: 1.0625rem;
+  }
+
+  .jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  .jump a {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text-muted);
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .jump a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .note {
+    margin-top: 1.75rem;
+    padding: 0.85rem 1.1rem;
+    background: var(--accent-soft);
+    border-left: 2px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    max-width: var(--measure);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr));
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .section {
+    scroll-margin-top: 5rem;
+  }
+</style>

@@ -1,0 +1,328 @@
+---
+import Base from '../layouts/Base.astro';
+import { profile } from '../data/profile';
+import { experience, education, skills } from '../data/resume';
+---
+
+<Base
+  title="Résumé — Daniel DeKerlegand"
+  description="Senior engineer and PhD candidate in computer science with a concentration in AI/ML. 10+ years in AI/ML, API, web, mobile, and distributed systems engineering."
+>
+  <article class="cv">
+    <header class="cv__head">
+      <div class="wrap wrap--narrow">
+        <div class="cv__headrow">
+          <div>
+            <h1 class="cv__name">{profile.name}</h1>
+            <p class="cv__role">{profile.title}</p>
+          </div>
+          <ul class="cv__contact">
+            <li>{profile.location}</li>
+            <li><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
+            <li><a href={profile.links.github} rel="noopener">github.com/danieldekerlegand</a></li>
+            <li><a href={profile.links.linkedin} rel="noopener">LinkedIn</a></li>
+          </ul>
+        </div>
+
+        <div class="cv__actions no-print">
+          <a class="btn btn--primary" href="/Daniel-DeKerlegand-CV.pdf" download>Download PDF</a>
+          <button class="btn" type="button" id="print-btn">Print</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="wrap wrap--narrow">
+        <h2 class="cv__h2">Summary</h2>
+        <p class="cv__summary">{profile.summary}</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap wrap--narrow">
+        <h2 class="cv__h2">Experience</h2>
+        {
+          experience.map((job) => (
+            <div class="job">
+              <div class="job__head">
+                <h3 class="job__org">{job.org}</h3>
+                <span class="job__dates">{job.dates}</span>
+              </div>
+              <p class="job__role">
+                {job.role} · {job.location}
+              </p>
+              <ul class="job__bullets">
+                {job.bullets.map((b) => (
+                  <li>{b}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap wrap--narrow">
+        <h2 class="cv__h2">Education</h2>
+        {
+          education.map((school) => (
+            <div class="school">
+              <h3 class="school__org">
+                {school.org} <span class="school__loc">{school.location}</span>
+              </h3>
+              <ul class="school__degrees">
+                {school.degrees.map((d) => (
+                  <li>
+                    <span class="school__degree">{d.degree}</span>
+                    <span class="school__year">{d.year}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap wrap--narrow">
+        <h2 class="cv__h2">Core Skills</h2>
+        <dl class="skills">
+          {
+            skills.map((g) => (
+              <div class="skills__group">
+                <dt class="skills__label">{g.label}</dt>
+                <dd class="skills__items">
+                  <ul class="tag-row">
+                    {g.items.map((i) => (
+                      <li class="tag">{i}</li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </section>
+  </article>
+
+  <script>
+    document.getElementById('print-btn')?.addEventListener('click', () => window.print());
+  </script>
+</Base>
+
+<style>
+  .cv__head {
+    padding-block: clamp(2.5rem, 7vw, 4rem) 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cv__headrow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .cv__name {
+    font-size: clamp(2rem, 5.5vw, 3rem);
+    letter-spacing: -0.022em;
+  }
+
+  .cv__role {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+  }
+
+  .cv__contact {
+    list-style: none;
+    text-align: right;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .cv__contact a {
+    text-decoration: none;
+  }
+
+  .cv__contact a:hover {
+    text-decoration: underline;
+  }
+
+  .cv__actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .cv__actions button {
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  .cv__h2 {
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    padding-bottom: 0.6rem;
+    margin-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cv__summary {
+    max-width: var(--measure);
+    color: var(--text-muted);
+    font-size: 1.0625rem;
+  }
+
+  /* experience */
+
+  .job + .job {
+    margin-top: 2.5rem;
+  }
+
+  .job__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .job__org {
+    font-size: 1.3rem;
+  }
+
+  .job__dates {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-faint);
+    white-space: nowrap;
+  }
+
+  .job__role {
+    font-size: 0.92rem;
+    color: var(--accent);
+    margin-top: 0.15rem;
+  }
+
+  .job__bullets {
+    list-style: none;
+    margin-top: 1rem;
+  }
+
+  .job__bullets li {
+    position: relative;
+    padding-left: 1.4rem;
+    font-size: 0.94rem;
+    color: var(--text-muted);
+  }
+
+  .job__bullets li + li {
+    margin-top: 0.85rem;
+  }
+
+  .job__bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 0.45rem;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  /* education */
+
+  .school + .school {
+    margin-top: 1.75rem;
+  }
+
+  .school__org {
+    font-size: 1.15rem;
+  }
+
+  .school__loc {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: var(--text-faint);
+    margin-left: 0.4rem;
+  }
+
+  .school__degrees {
+    list-style: none;
+    margin-top: 0.6rem;
+  }
+
+  .school__degrees li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    padding-block: 0.35rem;
+    border-bottom: 1px dotted var(--border);
+  }
+
+  .school__degree {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.02rem;
+  }
+
+  .school__year {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-faint);
+    white-space: nowrap;
+  }
+
+  /* skills */
+
+  .skills {
+    margin: 0;
+  }
+
+  .skills__group {
+    display: grid;
+    grid-template-columns: 15rem 1fr;
+    gap: 1.5rem;
+    padding-block: 1.1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skills__group:first-child {
+    border-top: 1px solid var(--border);
+  }
+
+  .skills__label {
+    font-size: 0.86rem;
+    font-weight: 600;
+    padding-top: 0.15rem;
+  }
+
+  .skills__items {
+    margin: 0;
+  }
+
+  @media (max-width: 46rem) {
+    .cv__contact {
+      text-align: left;
+    }
+    .skills__group {
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+    }
+  }
+</style>

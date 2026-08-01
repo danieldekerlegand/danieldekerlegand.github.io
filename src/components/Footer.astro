@@ -1,0 +1,55 @@
+---
+import { profile } from '../data/profile';
+
+const year = 2026;
+---
+
+<footer class="footer no-print">
+  <div class="wrap footer__inner">
+    <p class="footer__meta">
+      © {year} {profile.name} · {profile.location}
+    </p>
+    <ul class="footer__links">
+      <li><a href={`mailto:${profile.email}`}>Email</a></li>
+      <li><a href={profile.links.github} rel="me noopener">GitHub</a></li>
+      <li><a href={profile.links.linkedin} rel="me noopener">LinkedIn</a></li>
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--border);
+    padding-block: 2.25rem;
+    margin-top: 2rem;
+  }
+
+  .footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .footer__meta {
+    font-size: 0.85rem;
+    color: var(--text-faint);
+  }
+
+  .footer__links {
+    display: flex;
+    gap: 1.25rem;
+    list-style: none;
+    font-size: 0.85rem;
+  }
+
+  .footer__links a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .footer__links a:hover {
+    color: var(--accent);
+  }
+</style>

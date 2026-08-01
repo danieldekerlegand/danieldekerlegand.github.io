@@ -1,0 +1,277 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { profile, currently } from '../data/profile';
+import { featuredProjects, ecosystemIntro } from '../data/projects';
+import { experience } from '../data/resume';
+
+const focus = [
+  {
+    title: 'Neuro-symbolic architectures',
+    body: 'Bidirectional information flow between a symbolic state and a statistical generator: first-order predicate logic constrains what a language model may assert, and what it generates compiles back into rules. The point is to get the fluency of one and the accountability of the other without giving up the guarantees of either.',
+  },
+  {
+    title: 'Procedural generation & social physics',
+    body: 'Worlds that hold together across generations because the rules governing them are explicit and inspectable. Multi-generational demographic simulation with 40–200+ procedurally-generated characters, where emergent narrative is a consequence of the social model rather than a script laid over it.',
+  },
+  {
+    title: 'Interoperable agent infrastructure',
+    body: 'A contracts-first fabric — specify the protocols once, implement them in a shared runtime, and let every project be a peer on the same bus. MCP and A2A for transport, direct peer-to-peer dialing, and no central hub that everything has to route through.',
+  },
+];
+---
+
+<Base>
+  <section class="hero">
+    <div class="wrap">
+      <p class="hero__eyebrow">{profile.location}</p>
+      <h1 class="hero__name">{profile.name}</h1>
+      <p class="hero__title">{profile.title}</p>
+      <p class="hero__tagline">{profile.tagline}</p>
+
+      <p class="hero__summary">{profile.summary}</p>
+
+      <div class="hero__actions no-print">
+        <a class="btn btn--primary" href="/projects">View projects</a>
+        <a class="btn" href="/resume">Résumé</a>
+        <a class="btn" href={`mailto:${profile.email}`}>Get in touch</a>
+      </div>
+
+      <ul class="hero__now">
+        {
+          currently.map((c) => (
+            <li>
+              <span class="hero__now-role">{c.role}</span>
+              <span class="hero__now-org">{c.org}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Research focus</p>
+      <h2 class="section-title">What I work on</h2>
+      <p class="lede">
+        The through-line across everything below is reconciling large statistical models with
+        symbolic, good-old-fashioned AI — making the two accountable to each other rather than
+        picking a side.
+      </p>
+
+      <div class="focus">
+        {
+          focus.map((f) => (
+            <div class="focus__item">
+              <h3 class="focus__title">{f.title}</h3>
+              <p class="focus__body">{f.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Selected work</p>
+      <h2 class="section-title">One fabric, many products</h2>
+      <p class="lede">{ecosystemIntro}</p>
+
+      <div class="grid">
+        {featuredProjects.map((p) => <ProjectCard project={p} />)}
+      </div>
+
+      <p class="more no-print">
+        <a href="/projects">All projects, in detail →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Experience</p>
+      <h2 class="section-title">Where I've worked</h2>
+
+      <ol class="timeline">
+        {
+          experience.map((job) => (
+            <li class="timeline__item">
+              <div class="timeline__dates">{job.dates}</div>
+              <div class="timeline__body">
+                <h3 class="timeline__role">{job.role}</h3>
+                <p class="timeline__org">
+                  {job.org} · {job.location}
+                </p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+
+      <p class="more no-print">
+        <a href="/resume">Full résumé →</a>
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding-block: clamp(3.5rem, 10vw, 7rem) clamp(3rem, 7vw, 5rem);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 1rem;
+  }
+
+  .hero__name {
+    font-size: clamp(2.6rem, 8vw, 4.75rem);
+    letter-spacing: -0.025em;
+    margin-bottom: 0.35rem;
+  }
+
+  .hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    font-style: italic;
+    color: var(--text-muted);
+  }
+
+  .hero__tagline {
+    margin-top: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    padding-left: 1rem;
+    border-left: 2px solid var(--accent);
+  }
+
+  .hero__summary {
+    margin-top: 1.75rem;
+    max-width: var(--measure);
+    color: var(--text-muted);
+    font-size: 1.0625rem;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2.25rem;
+  }
+
+  .hero__now {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 3rem;
+    list-style: none;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .hero__now li {
+    display: flex;
+    flex-direction: column;
+    padding-block: 0.5rem;
+  }
+
+  .hero__now-role {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .hero__now-org {
+    font-size: 0.85rem;
+    color: var(--text-faint);
+  }
+
+  .focus {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: 2.5rem 3rem;
+    margin-top: 3rem;
+  }
+
+  .focus__title {
+    font-size: 1.15rem;
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .focus__body {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .more {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+  }
+
+  .more a {
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .more a:hover {
+    text-decoration: underline;
+  }
+
+  .timeline {
+    list-style: none;
+    margin-top: 2.5rem;
+  }
+
+  .timeline__item {
+    display: grid;
+    grid-template-columns: 12rem 1fr;
+    gap: 1.5rem;
+    padding-block: 1.35rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .timeline__item:last-child {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .timeline__dates {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    padding-top: 0.25rem;
+  }
+
+  .timeline__role {
+    font-size: 1.15rem;
+  }
+
+  .timeline__org {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+  }
+
+  @media (max-width: 40rem) {
+    .timeline__item {
+      grid-template-columns: 1fr;
+      gap: 0.4rem;
+    }
+  }
+</style>

@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Not found — Daniel DeKerlegand" description="That page does not exist.">
+  <section class="nf">
+    <div class="wrap">
+      <p class="eyebrow">404</p>
+      <h1 class="nf__title">No such page</h1>
+      <p class="lede">
+        That URL does not resolve to anything. Try the <a href="/">home page</a>, the
+        <a href="/projects">projects</a>, or the <a href="/resume">résumé</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    padding-block: clamp(4rem, 14vw, 9rem);
+  }
+
+  .nf__title {
+    font-size: clamp(2.2rem, 7vw, 3.5rem);
+    letter-spacing: -0.022em;
+    margin-bottom: 1rem;
+  }
+</style>
